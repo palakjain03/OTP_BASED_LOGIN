@@ -1,0 +1,31 @@
+
+CREATE DATABASE otp_login;
+USE otp_login;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) UNIQUE,
+  mobile VARCHAR(15) UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE otp_requests (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  otp_hash VARCHAR(255),
+  expires_at DATETIME,
+  attempts INT DEFAULT 0,
+  resend_count INT DEFAULT 0,
+  verified BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE audit_logs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  api_name VARCHAR(50),
+  status VARCHAR(20),
+  message VARCHAR(255),
+  trace_id VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

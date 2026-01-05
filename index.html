@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<h2>OTP Login</h2>
+<input id="email" placeholder="Email"><br><br>
+<button onclick="send()">Send OTP</button><br><br>
+<input id="otp" placeholder="OTP"><br><br>
+<button onclick="verify()">Verify</button>
+
+<script>
+function send(){
+ fetch("http://localhost:3000/api/send-otp",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({email:email.value})
+ }).then(r=>r.json()).then(a=>alert(a.message));
+}
+function verify(){
+ fetch("http://localhost:3000/api/verify-otp",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({email:email.value,otp:otp.value})
+ }).then(r=>r.json()).then(a=>alert(a.message));
+}
+</script>
+</body>
+</html>
