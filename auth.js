@@ -4,6 +4,13 @@ const db = require("../db");
 const otpGenerator = require("otp-generator");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 const router = express.Router();
 const MAX_ATTEMPTS = 3;
